@@ -1,0 +1,18 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Install dependencies (including MySQL drivers)
+RUN npm ci
+
+# Copy application code
+COPY . .
+
+# Expose your backend port
+EXPOSE 5000
+
+# Start command (dev mode with nodemon)
+CMD ["npm", "run", "dev"]
